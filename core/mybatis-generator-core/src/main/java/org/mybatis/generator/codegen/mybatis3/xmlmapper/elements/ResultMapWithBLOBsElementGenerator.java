@@ -23,9 +23,7 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public class ResultMapWithBLOBsElementGenerator extends
         AbstractXmlElementGenerator {
@@ -55,7 +53,7 @@ public class ResultMapWithBLOBsElementGenerator extends
 
         if (!introspectedTable.isConstructorBased()) {
             answer.addAttribute(new Attribute("extends", //$NON-NLS-1$
-                introspectedTable.getBaseResultMapId()));
+                    introspectedTable.getBaseResultMapId()));
         }
 
         context.getCommentGenerator().addComment(answer);
@@ -80,7 +78,7 @@ public class ResultMapWithBLOBsElementGenerator extends
 
             resultElement
                     .addAttribute(new Attribute(
-                            "column", "`" + MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn) + "`")); //$NON-NLS-1$
+                            "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute(
                     "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute(
@@ -98,14 +96,14 @@ public class ResultMapWithBLOBsElementGenerator extends
 
     private void addResultMapConstructorElements(XmlElement answer) {
         XmlElement constructor = new XmlElement("constructor"); //$NON-NLS-1$
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {
             XmlElement resultElement = new XmlElement("idArg"); //$NON-NLS-1$
 
             resultElement
                     .addAttribute(new Attribute(
-                            "column", "`" + MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn) + "`")); //$NON-NLS-1$
+                            "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute(
                     "jdbcType", introspectedColumn.getJdbcTypeName())); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
@@ -119,14 +117,14 @@ public class ResultMapWithBLOBsElementGenerator extends
 
             constructor.addElement(resultElement);
         }
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getNonPrimaryKeyColumns()) {
             XmlElement resultElement = new XmlElement("arg"); //$NON-NLS-1$
 
             resultElement
                     .addAttribute(new Attribute(
-                            "column", "`" + MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn) + "`")); //$NON-NLS-1$
+                            "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute(
                     "jdbcType", introspectedColumn.getJdbcTypeName())); //$NON-NLS-1$
 
@@ -137,7 +135,7 @@ public class ResultMapWithBLOBsElementGenerator extends
                 sb.append(introspectedColumn.getFullyQualifiedJavaType().getShortName());
                 resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
                         sb.toString()));
-                
+
             } else if ("byte[]".equals(introspectedColumn.getFullyQualifiedJavaType() //$NON-NLS-1$
                     .getFullyQualifiedName())) {
                 // need to use the MyBatis type alias for a primitive byte arry
@@ -147,7 +145,7 @@ public class ResultMapWithBLOBsElementGenerator extends
                 resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
                         introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName()));
             }
-            
+
             if (stringHasValue(introspectedColumn
                     .getTypeHandler())) {
                 resultElement.addAttribute(new Attribute(
